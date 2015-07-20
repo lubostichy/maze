@@ -22,97 +22,115 @@ public class Main
      * Metoda main spracova vstup, na zaklade vstupu rozhoduje o dalsich akciach
      * @param args argumenty
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
        
         Scanner sc = new Scanner(System.in, "Windows-1250");
-        
-  
-
-
  
         Tape t1 = null;
         TapeHead h1 = null;
                 
-        for(;;)
+        while(true)
         {
-        System.out.println("prikaz:");
-        /**premmenna pre ulozenie vstupu*/
-        String vstup;
-        vstup = sc.nextLine();
-        if(vstup.startsWith("game")) {
-            if(vstup.length()<=5) {
-                System.out.println("bad expression please try again"); 
-                continue;
-            }
-            t1 = file(vstup.substring(5));
-            if (t1==null) continue;
-            h1 = t1.createHead(0);
-        }
-        else if("show".equals(vstup)){
-            if (t1 != null) {
-                t1.show(h1);
-            }     
-        }
-        else if("close".equals(vstup)) {
-            break;
-        }
-        else if("step".equals(vstup)){
-            if (h1 != null) {
-                if (h1.step()) {
-                    System.out.println("True");
-                }
-                else {
-                    System.out.println("False");
-                }
-            }
-        }
-        else if("left".equals(vstup)){
-            if (h1 != null) {
-                h1.left();                
-                System.out.println("True");
-            }
-        }
-        else if("right".equals(vstup)){
-            if (h1 != null) {
-                h1.right();
-                System.out.println("True");
-            }
-        }
-        else if("take".equals(vstup)) {
-            if (h1 != null) {
-                if (h1.take()) {
-                    System.out.println("True");
-                }
-                else {
-                    System.out.println("False");
-                }
-            }
-        }
-        else if("open".equals(vstup)){
-            if (h1 != null) {
-                if (h1.open()) {
-                    System.out.println("True");
-                }
-                else {
-                    System.out.println("False");
-                }
-            }
-        }
-        else if("keys".equals(vstup)){
-            if (h1 != null) {
-                
-                System.out.println("Keys: "+h1.keys());
-            }
-        }
-        else { 
-            System.out.println("bad expression please try again"); 
-            continue;
-        }
-       
-
-//System.out.println(row);
-        }
+	        System.out.println("command:");
+	        
+	        //variable for saving a input
+	        String input;
+	        input = sc.nextLine();
+	        
+	        
+	        if(input.startsWith("game")) 
+	        {
+	            if(input.length() <= 5) 
+	            {
+	                System.out.println("bad expression please try again"); 
+	                continue;
+	            }
+	            t1 = file(input.substring(5));
+	            if (t1==null) continue;
+	            h1 = t1.createHead(0);
+	        }
+	        else
+	        {
+	        	switch(input) 
+	        	{
+	        	case "show":
+			        if (t1 != null) 
+			        {
+			            t1.show(h1);
+			        }     
+			        break;
+	        	case "close":			        
+	        		break;
+	        	case "step":
+	        		if (h1 != null)
+	        		{
+	        			if (h1.step()) 
+			            {
+	        				System.out.println("True");
+			            }
+			            else 
+			            {
+			                System.out.println("False");
+			            }
+			        }
+	        		break;
+	        	case "left":			        
+			        if (h1 != null) 
+			        {
+			            h1.left();                
+			            System.out.println("True");
+			        }
+			        break;
+	        	case "right": 
+			        if (h1 != null) 
+			        {
+			        	h1.right();
+			            System.out.println("True");
+			        }	
+			        break;
+	        	case "take":
+			        if (h1 != null) 
+			        {
+			        	if (h1.take()) 
+			        	{
+			            System.out.println("True");
+			            }
+			            else 
+			            {
+			                System.out.println("False");
+			            }
+			        }
+			        break;
+	        	case "open":			        
+			        if (h1 != null)
+			        {
+			        	if (h1.open()) 
+			        	{
+			        		System.out.println("True");
+			            }
+			            else 
+			            {
+			                System.out.println("False");
+			            }
+			         }
+			         break;			         
+	        	case "keys":
+			        if (h1 != null) 
+			        {			                
+			        	System.out.println("Keys: "+h1.keys());
+			        }
+			        break;
+			     default:			    	 		    	 
+			         System.out.println("bad expression please try again"); 
+			         continue;
+			         
+	        	} // switch
+	        } // else
+         } // while
     }
+
+        
     /**
      * Metoda nacita bludisko z textoveho suboru a
      * vracia vytvorenu pasku
@@ -120,13 +138,16 @@ public class Main
      * @return vracia vytvorenu pasku(bludisko)
      */
     
-    public static Tape file(String name) {
+    public static Tape file(String name) 
+    {
         Tape tmp = null;
         int row = 0;
         int col = 0;
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        try{
+        
+        try
+        {
             FileInputStream fstream = new FileInputStream(s+"/examples/"+name);            
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -134,16 +155,14 @@ public class Main
             String whole="";
             int r=0;
             int c=0;
-            while ((strLine = br.readLine()) != null) {
-                //if(strLine.contains(name)) {System.out.println ("Found");  r=1; continue;}
-                //else if(r!=1) continue;
-                if(strLine.matches(".*\\d.*")){
+            while ((strLine = br.readLine()) != null) 
+            {
+                if(strLine.matches(".*\\d.*"))
+                {
                 String[] parts=strLine.split(" ");
 
                 row=Integer.parseInt(parts[0]);
                 col=Integer.parseInt(parts[1]);
-                //System.out.printf ("%d ddd\n",row);
-                //System.out.println (col);
                 continue;
 
                 }
@@ -159,7 +178,8 @@ public class Main
 
             //Close the input stream
             in.close();
-        }catch (Exception e){//Catch exception if any
+        }catch (Exception e)
+        {//Catch exception if any
             System.err.println("Error: " + e.getMessage());
 
         }
