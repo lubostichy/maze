@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package maze;
 import maze.tape.*;
 import java.io.*;
@@ -25,7 +19,7 @@ public class Main
     public static void main(String[] args) 
     {
        
-        Scanner sc = new Scanner(System.in, "Windows-1250");
+        Scanner sc = new Scanner(System.in);
  
         Tape t1 = null;
         TapeHead h1 = null;
@@ -36,7 +30,14 @@ public class Main
 	        
 	        //variable for saving a input
 	        String input;
-	        input = sc.nextLine();
+	        while(true)
+	        {
+	        	if (sc.hasNextLine())
+	        	{
+	        		input = sc.nextLine();
+	        		break;
+	        	}
+	        }
 	        
 	        
 	        if(input.startsWith("game")) 
@@ -58,9 +59,9 @@ public class Main
 			        if (t1 != null) 
 			        {
 			            t1.show(h1);
-			        }     
+			        }    
 			        break;
-	        	case "close":			        
+	        	case "close":
 	        		break;
 	        	case "step":
 	        		if (h1 != null)
@@ -127,7 +128,13 @@ public class Main
 			         
 	        	} // switch
 	        } // else
-         } // while
+	        
+	        if (input.equals("close")) {
+	        	sc.close();
+	        	break;
+	        }
+	        
+         } // while        
     }
 
         
@@ -143,9 +150,11 @@ public class Main
         Tape tmp = null;
         int row = 0;
         int col = 0;
+        // get current path
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         
+        // try load maze
         try
         {
             FileInputStream fstream = new FileInputStream(s+"/examples/"+name);            
@@ -153,33 +162,30 @@ public class Main
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
             String whole="";
-            int r=0;
-            int c=0;
+
             while ((strLine = br.readLine()) != null) 
             {
                 if(strLine.matches(".*\\d.*"))
                 {
                 String[] parts=strLine.split(" ");
 
-                row=Integer.parseInt(parts[0]);
-                col=Integer.parseInt(parts[1]);
+                row = Integer.parseInt(parts[0]);
+                col  =Integer.parseInt(parts[1]);
+                
                 continue;
-
                 }
-                // Print the content on the console
-                //if(strLine.contains("@@")) break;
-                whole=whole.concat(strLine);
-                whole=whole.replaceAll("\\s+","");
-                //System.out.println (strLine);
-
+                
+                whole = whole.concat(strLine);
+                whole = whole.replaceAll("\\s+","");
             }
             
             tmp = new Tape(row,col,0,whole);
 
-            //Close the input stream
             in.close();
-        }catch (Exception e)
-        {//Catch exception if any
+        }
+        catch (Exception e)
+        {
+        	//Catch exception if any
             System.err.println("Error: " + e.getMessage());
 
         }
