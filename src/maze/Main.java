@@ -129,7 +129,8 @@ public class Main
 	        	} // switch
 	        } // else
 	        
-	        if (input.equals("close")) {
+	        if (input.equals("close")) 
+	        {
 	        	sc.close();
 	        	break;
 	        }
