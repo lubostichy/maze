@@ -3,9 +3,8 @@ package maze.objects;
 /**
  * Trieda rozsiruje triedu TapeObject
  * Objekt typu stena
- * @author xtichy23,xvlkov01
+ * @author Lubos Tichy
  */
-
 public class Wall extends maze.objects.TapeObject {    
     
     /**

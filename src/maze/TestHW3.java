@@ -1,19 +1,15 @@
 package maze;
 
-import java.lang.reflect.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import maze.Main;
-import static maze.Main.file;
 import maze.tape.*;
 import maze.objects.*;
 /**
  *
- * @author Lenovo
+ * @author Lubos Tichy
  */
 public class TestHW3 {
     

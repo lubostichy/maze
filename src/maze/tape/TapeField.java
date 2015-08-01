@@ -4,7 +4,7 @@ import maze.objects.*;
 
 /**
  * Trieda vytvori objekty(stena,brana..)
- * @author xtichy23,xvlkov01
+ * @author Lubos Tichy
  */
 public class TapeField {
     /**riadok*/

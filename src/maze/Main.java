@@ -5,9 +5,9 @@ import java.util.Scanner;
 import java.nio.file.Paths;
 import java.nio.file.Path;
  /**
- *Trieda obsahuje spracovanie prikazov 
+ * Trieda obsahuje spracovanie prikazov 
  * zadanych z prikazoveho riadka a nacitanie bludiska zo suboru
- * @author xtichy23,xvlkov01
+ * @author Lubos Tichy
  */
 public class Main 
 {

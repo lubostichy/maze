@@ -2,7 +2,7 @@ package maze.objects;
 
 /**
  * Vytvori objekty(stena,..) na zakladade predaneho parametru
- * @author xtichy23,xvlkov01
+ * @author Lubos Tichy
  */
 public abstract class TapeObject {
     /**typ objektu ktory sa ma vytvorit*/

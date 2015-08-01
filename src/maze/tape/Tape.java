@@ -1,8 +1,8 @@
 package maze.tape;
 
 /**
- *Trieda vytvori pasku z objektami, hlavu a vypise na vystup stav bludiska
- * @author xtichy23, xvlkov01
+ * Trieda vytvori pasku z objektami, hlavu a vypise na vystup stav bludiska
+ * @author Lubos Tichy
  */
 public class Tape {
     /**2-d pole pre objekty(stena,brana...)*/

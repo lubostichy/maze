@@ -1,8 +1,8 @@
 package maze.objects;
 
 /**
- *Charakteristika Brany
- * @author xtichy23,xvlkov01
+ * Charakteristika brany
+ * @author Lubos Tichy
  */
 public class Gate extends maze.objects.TapeObject{
 /**Brana je na zaciatku zavreta*/

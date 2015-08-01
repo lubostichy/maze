@@ -1,8 +1,8 @@
 package maze.objects;
 
 /**
- *Charakteristy policka kluc
- * @author xtichy23,xvlkov01
+ * Charakteristika kluca
+ * @author Lubos Tichy
  */
 public class Key extends maze.objects.TapeObject {
     /**

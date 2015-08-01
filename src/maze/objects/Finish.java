@@ -1,9 +1,9 @@
 package maze.objects;
 
 /**
- *Trieda rozsiruje triedu TapeObject
- * Chovanie ciela
- * @author xtichy23,xvlkov01
+ * Trieda rozsiruje triedu TapeObject
+ * Akcie ciela
+ * @author Lubos Tichy
  */
 public class Finish extends maze.objects.TapeObject {
     
