@@ -1,16 +1,19 @@
 package maze.objects;
 
 /**
- * Vytvori objekty(stena,..) na zakladade predaneho parametru
- * @author Lubos Tichy
+ * Objekty hracej plochy.
+ * @author Ľuboš Tichý
  */
 public abstract class TapeObject {
-    /**typ objektu ktory sa ma vytvorit*/
+
+    /** Typ objektu, ktorý sa má vytvoriť. */
     protected String name;
     
+    /** Test, či je možné otvoriť políčko. */
     public abstract boolean canBeOpen();
+
     /**
-     * Vytvori objekt na zaklade typ
+     * Vytvorí objekt podľa predaného parametru.
      * @param format typ objektu
      * @return objekt
      */
@@ -39,10 +42,16 @@ public abstract class TapeObject {
         return null;
     }
    
+    /** Vypíše symbol objektu.  */
     public abstract String show();
     
+    /** Testuje, či je možné obsadiť políčko. */
     public abstract boolean canSeize();
     
+    /**
+     * Otvorí objekt.
+     * @return Výsledok otvorenia.
+     */
     public boolean open() {
         if (this instanceof Gate) {
             return this.canBeOpen();

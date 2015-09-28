@@ -1,44 +1,48 @@
 package maze.objects;
 
 /**
- * Trieda rozsiruje triedu TapeObject
- * Akcie ciela
- * @author Lubos Tichy
+ * Predstavuje cieľové políčko.
+ * @author Ľuboš Tichý
  */
-public class Finish extends maze.objects.TapeObject {
+public class Finish extends maze.objects.TapeObject 
+{
     
     /**
-     * test ci sa da otovrit
+     * Testuje, že cieľ nie je možné otvoriť kľúčom.
      * @return false
      */
     @Override
-    public boolean canBeOpen() {
+    public boolean canBeOpen() 
+    {
         return false;
     }
     
     /**
-     * test ci sa da obsadit
+     * Cieľ je možné obsadiť.
      * @return true
      */
     @Override
-    public boolean canSeize() {
+    public boolean canSeize() 
+    {
         return true;
     }
     
     /**
-     * otvor ciel
+     * Cieľ nie je možné otvoriť kľúčom.
      * @return false
      */
     @Override
-    public boolean open() {
+    public boolean open() 
+    {
         return false;
     }
     /**
-     * Vypis na obrazovku
+     * Vypíše na obrazovku symbol cieľového políčka.
      * @return F
      */
     @Override 
-    public String show() {
+    public String show() 
+    {
         return "F";
     }
 }

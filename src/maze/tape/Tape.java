@@ -1,100 +1,83 @@
 package maze.tape;
 
 /**
- * Trieda vytvori pasku z objektami, hlavu a vypise na vystup stav bludiska
- * @author Lubos Tichy
+ * Trieda vytvorí pásku s objektami, hlavy a vypíše na výstup podobu bludiska.
+ * @author Ľuboš Tichý
  */
 public class Tape {
-    /**2-d pole pre objekty(stena,brana...)*/
+
+    /** 2D páska pre objekty */
     public TapeField[][] arrField;
-    //public TapeHead[] headArr;
-    /**riadok*/
+    
+    /** riadok pásky */
     protected int row;
-    /**stlpec*/
+    /** stĺpec pásky */
     protected int col;
-    /**pocet hlav*/
+
+    /** počet hláv */
     protected int h;
-    /**retazec objektov*/
+    /** reťazec objektov */
     protected String whole;
     
     /**
-     * Vytvori 2-d pole objektov TapeField
+     * Vytvorí 2D pole políčok.
      * @param r riadky
-     * @param c stlpce
-     * @param h pocet hracov
-     * @param format retazec objektov ktore maju byt vytvorene(stena,brana,...)
+     * @param c stĺpce
+     * @param h počet hráčov
+     * @param format reťazec objektov, ktoré sa vytvoria
      */
     public Tape(int r,int c, int h, String format)
     {
-        this.row=r;
-        this.col=c;
-        this.arrField=new TapeField[r][c];
-        //fieldArr= new Tape();
-        this.h=h;
-      // this.headArr= new TapeHead[h];
-        int j=0;
-        int i=0;
-       String ch;  
-       for(int k=0;format.length()>k;k++)  
+        this.row = r;
+        this.col = c;
+        this.arrField = new TapeField[r][c];        
+        this.h = h ;
+              
+        int j = 0;
+        int i = 0;
+        String ch;          
+        for(int k = 0; format.length() > k; k++)  
         { 
-            if(j==c)
+            if (j == c)
             {
                 j=0;
                 i++;
             }
-        
-            ch=format.substring(k,k+1);
-            //System.out.printf ("%s\n",ch);
-           // if(" ".equals(ch)) continue;
-            if("w".equals(ch))
-            {
-                //System.out.printf ("%s %d %d\n",ch,i,j);
-                this.arrField[i][j]=new TapeField(this,i,j,"w");
-                j++;
-            }
-            else if(("g".equals(ch)))
-            {
-                //System.out.printf ("%s %d %d\n",ch,i,j);
-                this.arrField[i][j]=new TapeField(this,i,j,"g");
-               j++;
-            }
-            else if(("p".equals(ch))){
-                //System.out.printf ("%s %d %d\n",ch,i,j);
-                this.arrField[i][j]=new TapeField(this,i,j,"p");
-                j++;
-            }
-            else if("k".equals(ch))
-            {
-                //System.out.printf ("%s %d %d\n",ch,i,j);
-                this.arrField[i][j]=new TapeField(this,i,j,"k");
-                j++;
-            }
-            else if("F".equals(ch))
-            {
-                //System.out.printf ("%s %d %d\n",ch,i,j);
-                this.arrField[i][j]=new TapeField(this,i,j,"f");
-                j++;
+            
+            ch = format.substring(k, k + 1);
+            
+            if(null != ch)
+            switch (ch) {
+                case "w":
+                    this.arrField[i][j] = new TapeField(this, i, j, "w");
+                    j++;
+                    break;
+                case "g":
+                    this.arrField[i][j] = new TapeField(this, i, j, "g");
+                    j++;
+                    break;
+                case "p":
+                    this.arrField[i][j] = new TapeField(this, i, j, "p");
+                    j++;
+                    break;
+                case "k":
+                    this.arrField[i][j] = new TapeField(this, i, j, "k");
+                    j++;
+                    break;
+                case "F":
+                    this.arrField[i][j] = new TapeField(this, i, j, "f");
+                    j++;
+                    break;
             }
         }
-        
     }
     
-
-    
-    /*public TapeField fieldAt(int i, int j)
-    {
-        if(i>=this.row) return null;
-        if(j>=this.col) return null;
-        
-        return this.arrField[i][j];
-        
-    }*/
     /**
-     * Vytvori hraca(hlavu)
-     * @param i id hraca
-     * @return novu hlavu alebo null
+     * Vytvorí hráča(hlavu).
+     * @param i ID hráča
+     * @return novú hlavu alebo null
      */
-   public TapeHead createHead(int i)
+    public TapeHead createHead(int i)
     {
         //int j=0;
         for(int x = 0; x < this.col; x++) {
@@ -110,7 +93,7 @@ public class Tape {
         return null;    
     }
     /**
-     * Vypise na vystup bludisko aj s hracom
+     * Vypíše na výstup bludisko aj s hráčmi.
      * @param h hlava
      */
     public void show(TapeHead h) {
@@ -119,18 +102,20 @@ public class Tape {
             for (int j = 0; j < row; j++) {
                 if (arrField[i][j].object != null) {
                     if (arrField[i][j].isHead == 1) {
-                        //System.out.print("X "); 
-                        if (h.dir.equals("north")) {
-                            System.out.print("^");
-                        }
-                        if (h.dir.equals("west")) {
-                            System.out.print("<");
-                        }
-                        if (h.dir.equals("south")) {
-                            System.out.print("v");
-                        }
-                        if (h.dir.equals("east")) {
-                            System.out.print(">");
+                        //System.out.print("X ");
+                        switch (h.dir) {
+                            case "north":
+                                System.out.print("^");
+                                break;
+                            case "west":
+                                System.out.print("<");
+                                break;
+                            case "south":
+                                System.out.print("v");
+                                break;
+                            case "east":
+                                System.out.print(">");
+                                break;
                         }
                     }
                     else {
@@ -139,18 +124,20 @@ public class Tape {
                 } 
                 else {
                     if (arrField[i][j].isHead == 1) {
-                        //System.out.print("X ");    
-                        if (h.dir.equals("north")) {
-                            System.out.print("^ ");
-                        }
-                        if (h.dir.equals("west")) {
-                            System.out.print("< ");
-                        }
-                        if (h.dir.equals("south")) {
-                            System.out.print("v ");
-                        }
-                        if (h.dir.equals("east")) {
-                            System.out.print("> ");
+                        //System.out.print("X ");
+                        switch (h.dir) {
+                            case "north":
+                                System.out.print("^ ");
+                                break;
+                            case "west":
+                                System.out.print("< ");
+                                break;
+                            case "south":
+                                System.out.print("v ");
+                                break;
+                            case "east":
+                                System.out.print("> ");
+                                break;
                         }
                     }
                     else {

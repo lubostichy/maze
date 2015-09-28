@@ -1,14 +1,13 @@
 package maze.objects;
 
 /**
- * Trieda rozsiruje triedu TapeObject
- * Objekt typu stena
- * @author Lubos Tichy
+ * Predstavuje stenu.
+ * @author Ľuboš Tichý
  */
 public class Wall extends maze.objects.TapeObject {    
     
     /**
-     * test ci je mozne otvorit stenu
+     * Stenu nie je možné obsadiť.
      * @return false
      */
     @Override
@@ -17,7 +16,7 @@ public class Wall extends maze.objects.TapeObject {
     }
     
     /**
-     * test ci je mozne obsadit 
+     * Stenu nie je možné obsadiť.
      * @return false
      */
     @Override
@@ -26,7 +25,7 @@ public class Wall extends maze.objects.TapeObject {
     }
     
     /**
-     * test ci je mozne otvorit stenu
+     * Stenu nie je možné otvoriť.
      * @return false
      */
     @Override
@@ -35,14 +34,11 @@ public class Wall extends maze.objects.TapeObject {
     }
     
     /**
-     * co sa ma vypisat na obrazovku
+     * Vypíše symbol steny.
      * @return W
      */
     @Override
     public String show() {
         return "W";
     }
-    
-    
-    
 }

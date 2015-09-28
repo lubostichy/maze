@@ -1,12 +1,13 @@
 package maze.objects;
 
 /**
- * Charakteristika kluca
- * @author Lubos Tichy
+ * Predstavuje kľúč.
+ * @author Ľuboš Tichý.
  */
 public class Key extends maze.objects.TapeObject {
+
     /**
-     * test ci sa da kluc  otvorit
+     * Kľúč nie je možné otvoriť.
      * @return false
      */
     @Override
@@ -15,7 +16,7 @@ public class Key extends maze.objects.TapeObject {
     }
     
     /**
-     * kluc nie je mozne obsadit
+     * Kľúč nie je možné obsadiť.
      * @return false
      */
     @Override
@@ -24,20 +25,20 @@ public class Key extends maze.objects.TapeObject {
     }
     
     /**
-     * kluc sa neda otvorit
+     * Kľúč nie je možné otvoriť.
      * @return false
      */
     @Override
     public boolean open() {
         return false;
     }
+
     /**
-     * Vypis na obrazovku
+     * Vypíše na obrazovku symbol kľúča.
      * @return K
      */
     @Override
     public String show() {
         return "K";
     }
-    
 }
