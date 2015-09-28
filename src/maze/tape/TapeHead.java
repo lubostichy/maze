@@ -3,9 +3,8 @@ package maze.tape;
 import maze.objects.*;
 
 /**
- * Trieda definuje spravanie sa hlavy(hraca)
- * ako su pohyby, zber klucov, otvorenie brany..
- * @author Lubos Tichy
+ * Trieda definuje správanie sa hlavy(hráča) ako sú pohyby, zber kľúčov, otvorenie brány..
+ * @author Ľuboš Tichý
  */
 public class TapeHead {
     

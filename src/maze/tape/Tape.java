@@ -11,11 +11,13 @@ public class Tape {
     
     /** riadok pásky */
     protected int row;
+    
     /** stĺpec pásky */
     protected int col;
 
     /** počet hláv */
     protected int h;
+    
     /** reťazec objektov */
     protected String whole;
     
@@ -96,13 +98,11 @@ public class Tape {
      * Vypíše na výstup bludisko aj s hráčmi.
      * @param h hlava
      */
-    public void show(TapeHead h) {
-        
+    public void show(TapeHead h) {        
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
-                if (arrField[i][j].object != null) {
-                    if (arrField[i][j].isHead == 1) {
-                        //System.out.print("X ");
+                if (arrField[i][j].object != null) { // ak je voľné políčko
+                    if (arrField[i][j].isHead == 1) { // je na ňom hráč
                         switch (h.dir) {
                             case "north":
                                 System.out.print("^");
@@ -119,12 +119,11 @@ public class Tape {
                         }
                     }
                     else {
-                        System.out.print(arrField[i][j].object.show()+" ");
+                        System.out.print(arrField[i][j].object.show()+" "); // voľné políčko
                     }
                 } 
-                else {
-                    if (arrField[i][j].isHead == 1) {
-                        //System.out.print("X ");
+                else { // ak je políčko s objektom
+                    if (arrField[i][j].isHead == 1) { // je na ňom hráč
                         switch (h.dir) {
                             case "north":
                                 System.out.print("^ ");

@@ -4,50 +4,57 @@ import maze.objects.*;
 
 /**
  * Trieda vytvori objekty(stena,brana..)
- * @author Lubos Tichy
+ * @author Ľuboš Tichý
  */
 public class TapeField {
-    /**riadok*/
-    int x;
-    /**stlpec*/
-    int y;
-    /**Paska*/
+    
+    /** riadok pásky */
+    protected int x;
+    
+    /** stĺpec pásky */
+    protected int y;
+    
+    /** páska */
     protected Tape tape;
-    /**Objekt*/
+    
+    /** objekt */
     protected TapeObject object = null;
-    /**ci je hlava*/
+    
+    /** výskyt hlavy */
     protected int isHead = 0;
     
     /**
-     * Vytvori objekty na zakladade predaneho argumentu
-     * @param tape paska 
+     * Položí objekt na políčko na základe predaného parametru.
+     * @param tape páska 
      * @param x riadok
      * @param y stlpec
      * @param type typ objektu
      */
-    public TapeField (Tape tape, int x, int y, String type) {
+    public TapeField(Tape tape, int x, int y, String type) {
         this.tape = tape;
         this.x = x;
         this.y = y;
         this.object = null;
         this.isHead = 0;
-        if (type.equals("w")) {
-            this.object = new Wall();
+        switch (type) {
+            case "w":
+                this.object = new Wall();
+                break;
+            case "g":
+                this.object = new Gate();
+                break;
+            case "k":
+                this.object = new Key();
+                break;
+            case "f":
+                this.object = new Finish();  
+                break;
         }
-        if (type.equals("g")) {
-            this.object = new Gate();
-        }   
-        if (type.equals("k")) {
-            this.object = new Key();
-        }  
-        if (type.equals("f")) {
-            this.object = new Finish();
-        }  
         
     }
     /**
-     * Testuje ci sa objekt da otvorit
-     * @return ak je objekt brana vracia true inak false
+     * Testuje, či je možné objekt otvoriť.
+     * @return ak je objekt brána vracia true alebo false, inak false
      */
     public boolean canBeOpen() {
         if (this.object != null) {
@@ -57,8 +64,8 @@ public class TapeField {
     }
     
     /**
-     * Testuje ci je policko mozne obsadit
-     * @return pri wall,zatvorenej gate false inak true
+     * Testuje, či je možné objekt obsadiť.
+     * @return true alebo false
      */
     public boolean canSeize() {
         if (this.object != null) {
