@@ -4,14 +4,16 @@ package maze.objects;
  * Predstavuje stenu.
  * @author Ľuboš Tichý
  */
-public class Wall extends maze.objects.TapeObject {    
+public class Wall extends maze.objects.TapeObject 
+{    
     
     /**
      * Stenu nie je možné obsadiť.
      * @return false
      */
     @Override
-    public boolean canBeOpen() {
+    public boolean canBeOpen() 
+    {
         return false;
     }
     
@@ -20,7 +22,8 @@ public class Wall extends maze.objects.TapeObject {
      * @return false
      */
     @Override
-    public boolean canSeize() {
+    public boolean canSeize() 
+    {
         return false;
     }
     
@@ -29,7 +32,8 @@ public class Wall extends maze.objects.TapeObject {
      * @return false
      */
     @Override
-    public boolean open() {
+    public boolean open() 
+    {
         return false;
     }
     
@@ -38,7 +42,8 @@ public class Wall extends maze.objects.TapeObject {
      * @return W
      */
     @Override
-    public String show() {
+    public String show() 
+    {
         return "W";
     }
 }

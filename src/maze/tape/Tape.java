@@ -4,7 +4,8 @@ package maze.tape;
  * Trieda vytvorí pásku s objektami, hlavy a vypíše na výstup podobu bludiska.
  * @author Ľuboš Tichý
  */
-public class Tape {
+public class Tape 
+{
 
     /** 2D páska pre objekty */
     public TapeField[][] arrField;
@@ -49,7 +50,8 @@ public class Tape {
             ch = format.substring(k, k + 1);
             
             if(null != ch)
-            switch (ch) {
+            switch (ch) 
+            {
                 case "w":
                     this.arrField[i][j] = new TapeField(this, i, j, "w");
                     j++;
@@ -82,9 +84,12 @@ public class Tape {
     public TapeHead createHead(int i)
     {
         //int j=0;
-        for(int x = 0; x < this.col; x++) {
-            for(int y=0; y<this.row; y++) {
-                if(arrField[x][y].canSeize()) {
+        for(int x = 0; x < this.col; x++) 
+        {
+            for(int y=0; y<this.row; y++) 
+            {
+                if(arrField[x][y].canSeize()) 
+                {
                     arrField[x][y].isHead = 1;
                     TapeHead tmp = new TapeHead(i, arrField[x][y]);
                     return tmp;
@@ -98,12 +103,18 @@ public class Tape {
      * Vypíše na výstup bludisko aj s hráčmi.
      * @param h hlava
      */
-    public void show(TapeHead h) {        
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < row; j++) {
-                if (arrField[i][j].object != null) { // ak je voľné políčko
-                    if (arrField[i][j].isHead == 1) { // je na ňom hráč
-                        switch (h.dir) {
+    public void show(TapeHead h) 
+    {        
+        for (int i = 0; i < col; i++) 
+        {
+            for (int j = 0; j < row; j++) 
+            {
+                if (arrField[i][j].object != null) // ak je voľné políčko
+                { 
+                    if (arrField[i][j].isHead == 1)  // je na ňom hráč
+                    {
+                        switch (h.dir) 
+                        {
                             case "north":
                                 System.out.print("^");
                                 break;
@@ -118,13 +129,16 @@ public class Tape {
                                 break;
                         }
                     }
-                    else {
+                    else 
+                    {
                         System.out.print(arrField[i][j].object.show()+" "); // voľné políčko
                     }
                 } 
                 else { // ak je políčko s objektom
-                    if (arrField[i][j].isHead == 1) { // je na ňom hráč
-                        switch (h.dir) {
+                    if (arrField[i][j].isHead == 1)  // je na ňom hráč
+                    {
+                        switch (h.dir) 
+                        {
                             case "north":
                                 System.out.print("^ ");
                                 break;
@@ -139,7 +153,8 @@ public class Tape {
                                 break;
                         }
                     }
-                    else {
+                    else 
+                    {
                         System.out.print("P ");
                     }
                 }

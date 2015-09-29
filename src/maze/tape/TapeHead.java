@@ -6,167 +6,167 @@ import maze.objects.*;
  * Trieda definuje správanie sa hlavy(hráča) ako sú pohyby, zber kľúčov, otvorenie brány..
  * @author Ľuboš Tichý
  */
-public class TapeHead {
+public class TapeHead 
+{
     
+    /** identifikátor hlavy */
     protected int ident = 0;
+    
+    /** políčko, na ktorej sa hlava nachádza */
     protected TapeField field = null;
+    
+    /** počet kľúčov, ktoré vlastní */
     protected int keys = 0;
+    
+    /** smer, ktorým sa pozerá */
     protected String dir = "north";
+    
     /**
-     * Inicializacia hraca
-     * @param id identifikator
-     * @param f policko na kt. ma byt umiestneni
+     * Inicializuje hráča.
+     * @param id identifikátor
+     * @param f políčko, na ktoré má byť hlava umiestnená
      */
-    public TapeHead (int id, TapeField f) {
+    public TapeHead (int id, TapeField f) 
+    {
         ident = id;        
         field = f;
     }
-    
-    /*public TapeField seizedField () {
-        return field;
-    }*/
+
     /**
-     * Prida kluc
-     * @param n pocet aktualnych klucov
+     * Pridá kľúč.
      */
-    public void addKey (int n) {
+    public void addKey () 
+    {
         keys++;
     }
+    
     /**
-     * Vrati pocet klucov
-     * @return kluce
+     * Vráti počet klúčov.
+     * @return počet kľúčov
      */
-    public int keys() {
+    public int keys() 
+    {
         return keys;
     }
-    /**
-     * Otocenie hraca vlavo
-     */
     
-    public void left () {
-        if (dir.equals("north")) {
-            dir = "west";
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("west")) {
-            dir = "south";
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("south")) {
-            dir = "east";
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("east")) {
-            dir = "north";
-            //System.out.print(dir);
+    /**
+     * Otočí hráča vľavo.
+     */    
+    public void left () 
+    {
+        switch (dir) {
+            case "north":
+                dir = "west";
+                break;
+            case "west":
+                dir = "south";
+                break;
+            case "south":
+                dir = "east";
+                break;
+            case "east":
+                dir = "north";
+                break;
         }
     }
+    
     /**
-     * Otocenie hraca vpravo
+     * Otočí hráča vpravo.
      */
-    public void right () {
+    public void right () 
+    {        
+        switch (dir) {
+            case "north":
+                dir = "east";
+                break;
+            case "east":
+                dir = "south";
+                break;
+            case "south":
+                dir = "west";
+                break;
+            case "west":
+                dir = "north";
+                break;
+        }
+    }
+    
+    /**
+     * Zistí, aké políčko je pred objektom.
+     * @return vráti políčko pred objektom
+     */
+    public TapeField frontField() 
+    {
         
-        if (dir.equals("north")) {
-            dir = "east";
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("east")) {
-            dir = "south";
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("south")) {
-            dir = "west"; 
-            //System.out.print(dir);
-            return;
-        }
-        if (dir.equals("west")) {
-            dir = "north";
-            //System.out.print(dir);
-        }
-    }
-    
-    public TapeField frontField() {
+        /** pomocné políčko  */
         TapeField tmp = field;
-        
-        /*if (field.object != null) {
-            System.out.println("aktualne policko: "+field.object.show());
-        }
-        else {
-            System.out.println("aktualne policko: prazdne");
-        }*/
+
+        /** index pomocného políčka  */
         int tmpX = field.x;
+        
+        /** index pomocného políčka */
         int tmpY = field.y;
-        if (dir.equals("north")) {
-            if (field.x == 0) {
+        
+        switch (dir) 
+        {
+            case "north":
+                if (field.x == 0)
+                {
+                    return null;
+                }
+                tmp = field.tape.arrField[tmp.x-1][tmp.y];
+                tmp.x = tmpX-1;
+                tmp.y = tmpY;
+                tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
+                tmp.tape = field.tape;
+                return tmp;
+            case "east":
+                if (this.field.tape.col == (field.y + 1))
+                {
+                    return null;
+                }
+                tmp = field.tape.arrField[tmp.x][tmp.y+1];
+                tmp.x = tmpX;
+                tmp.y = tmpY+1;
+                tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
+                tmp.tape = field.tape;            
+                return tmp;
+            case "south":
+                if (this.field.tape.row == (field.x + 1))
+                {
+                    return null;
+                }
+                tmp = field.tape.arrField[tmp.x+1][tmp.y];
+                tmp.x = tmpX+1;
+                tmp.y = tmpY;
+                tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
+                tmp.tape = field.tape;
+                return tmp;
+            case "west":
+                if (this.field.y == 0)
+                {
+                    return null;
+                }
+                tmp = field.tape.arrField[tmp.x][tmp.y-1];
+                tmp.x = tmpX;
+                tmp.y = tmpY-1;
+                tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
+                tmp.tape = field.tape;
+                return tmp;
+            default:
                 return null;
-            }
-            //System.out.println(dir);
-            //System.out.println("x: "+field.x+" y: "+field.y);
-            tmp = field.tape.arrField[tmp.x-1][tmp.y];
-            tmp.x = tmpX-1;
-            tmp.y = tmpY;
-            tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
-            tmp.tape = field.tape;
-            
-            //System.out.println("x: "+tmp.x+" y: "+tmp.y);
-            return tmp;
         }
-        if (dir.equals("east")) {
-            if (this.field.tape.col == (field.y + 1)) {
-                return null;
-            }
-            //System.out.println(dir);
-            tmp = field.tape.arrField[tmp.x][tmp.y+1];
-            tmp.x = tmpX;
-            tmp.y = tmpY+1;
-            tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
-            tmp.tape = field.tape;
-            
-            //System.out.println("x: "+tmp.x+" y: "+tmp.y);
-            return tmp;
-        }
-        if (dir.equals("south")) {
-            if (this.field.tape.row == (field.x + 1)) {
-                return null;
-            } 
-            //System.out.println(dir);
-            tmp = field.tape.arrField[tmp.x+1][tmp.y];
-            tmp.x = tmpX+1;
-            tmp.y = tmpY;
-            tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
-            tmp.tape = field.tape;
-            
-            //System.out.println("x: "+tmp.x+" y: "+tmp.y);
-            return tmp;
-        }
-        if (dir.equals("west")) {
-            if (this.field.y == 0) {
-                return null;
-            } 
-            //System.out.println(dir);
-            tmp = field.tape.arrField[tmp.x][tmp.y-1];
-            tmp.x = tmpX;
-            tmp.y = tmpY-1;
-            tmp.object = field.tape.arrField[tmp.x][tmp.y].object;
-            tmp.tape = field.tape;
-            
-            //System.out.println("x: "+tmp.x+" y: "+tmp.y);
-            return tmp;
-        }
-        return null;
     }
+    
     /**
-     * Hrac zoberie kluc
-     * @return ak je pred nim kluc vracia true inak false
+     * Hráč zoberie klúč.
+     * @return ak je pred ním klúč vracia true inak false
      */
-    public boolean take() {        
+    public boolean take() 
+    {        
         TapeField tmp = frontField();
-        if (tmp.object instanceof Key) {
+        if (tmp.object instanceof Key) 
+        {
             field.tape.arrField[tmp.x][tmp.y].object = null;
             keys++;
             return true;
@@ -175,47 +175,43 @@ public class TapeHead {
     }
     
     /**
-     * Otvori branu
-     * @return ak je pred hracom brana a ma kluc vracia true inak false
+     * Otvorí bránu.
+     * @return ak je pred hráčom brána a hráč má klúč, tak vracia true, inak false
      */
-    public boolean open() {
+    public boolean open() 
+    {
         TapeField tmp = frontField();
-        if (tmp.object instanceof Gate) {
-            if (tmp.object.canBeOpen()) {
-                if (tmp.object.open()) {
+        if (tmp.object instanceof Gate) 
+        {
+            if (tmp.object.canBeOpen()) 
+            {
+                if (tmp.object.open()) 
+                {
                     keys--;
                     return true;
                 }
             }
-        }
-        
+        }        
         return false;
     }
+    
     /**
-     * Krok dopredu smerom ktorym je hrac otoceny.
-     * 
-     * @return Ak je krok mozny vracia true inak false
+     * Krok dopredu smerom, ktorým je hráč otočený.
+     * @return ak je krok možný, tak vracia true, inak false
      */
-    public boolean step() {
+    public boolean step() 
+    {        
         TapeField tmp = frontField();
-        /*if (tmp.object != null) {
-            System.out.print("predo mnou policko: "+tmp.object.show());
-        }
-        else {
-            System.out.print("predo mnou policko je prazdne");
-        }*/
-        if (tmp != null) {
-            if (tmp.canSeize()) {
-                //System.out.print("kracam z: "+field.x+" "+field.y);
+        if (tmp != null) 
+        {
+            if (tmp.canSeize()) 
+            {
                 this.field.tape.arrField[field.x][field.y].isHead = 0;
-                //System.out.println(" na: "+tmp.x+" "+tmp.y);
                 this.field.tape.arrField[tmp.x][tmp.y].isHead = 1;
                 this.field = tmp;
                 return true;
             }
-        }
-        
+        }        
         return false;
     }
-    
 }
