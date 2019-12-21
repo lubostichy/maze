@@ -90,40 +90,14 @@ public class Tape {
 				{
 					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
-						switch (h.getDir()) {
-						case NORTH:
-							System.out.print("^");
-							break;
-						case WEST:
-							System.out.print("<");
-							break;
-						case SOUTH:
-							System.out.print("v");
-							break;
-						case EAST:
-							System.out.print(">");
-							break;
-						}
+						System.out.println(h.showDir() + " ");
 					} else {
 						System.out.print(arrField[i][j].getObject().show() + " "); // voľné políčko
 					}
 				} else { // ak je políčko s objektom
 					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
-						switch (h.getDir()) {
-						case NORTH:
-							System.out.print("^ ");
-							break;
-						case WEST:
-							System.out.print("< ");
-							break;
-						case SOUTH:
-							System.out.print("v ");
-							break;
-						case EAST:
-							System.out.print("> ");
-							break;
-						}
+						System.out.println(h.showDir() + " ");
 					} else {
 						System.out.print("P ");
 					}

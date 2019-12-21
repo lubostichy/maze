@@ -27,7 +27,9 @@ public class Service {
 			while (true) {
 				System.out.println("Set a game:");
 				input = sc.nextLine();
-				if (input.toUpperCase().startsWith(ECommand.GAME.toString()) && input.length() <= 5) {
+				System.out.println(ECommand.GAME.toString());
+				System.out.println(input.toUpperCase().equals(ECommand.GAME.toString()));
+				if (input.toUpperCase().startsWith(ECommand.GAME.toString()) && input.length() >= 5) {
 
 					t1 = file(input.substring(5));
 
@@ -52,7 +54,7 @@ public class Service {
 				ECommand command;
 				try {
 					command = ECommand.valueOf(input.toUpperCase());
-				} catch (IllegalArgumentException e) {
+				} catch (final IllegalArgumentException e) {
 					System.out.println(BAD_EXPRESSION_TEXT);
 					continue;
 				}
@@ -110,24 +112,24 @@ public class Service {
 	 * @param name názov bludiska
 	 * @return vracia vytvorenú pásku(bludisko)
 	 */
-	public static Tape file(String name) {
-		Tape tmp = null;
+	public static Tape file(final String name) {
+		Tape tape = null;
 		int row = 0;
 		int col = 0;
 
-		Path currentRelativePath = Paths.get("");
-		String s = currentRelativePath.toAbsolutePath().toString();
+		final Path currentRelativePath = Paths.get("");
+		final String s = currentRelativePath.toAbsolutePath().toString();
 
 		try {
-			FileInputStream fstream = new FileInputStream(s + "/examples/" + name);
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			final FileInputStream fstream = new FileInputStream(s + "/examples/" + name);
+			final DataInputStream in = new DataInputStream(fstream);
+			final BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			String whole = "";
 
 			while ((strLine = br.readLine()) != null) {
 				if (strLine.matches(".*\\d.*")) {
-					String[] parts = strLine.split(" ");
+					final String[] parts = strLine.split(" ");
 
 					row = Integer.parseInt(parts[0]);
 					col = Integer.parseInt(parts[1]);
@@ -139,13 +141,12 @@ public class Service {
 				whole = whole.replaceAll("\\s+", "");
 			}
 
-			tmp = new Tape(row, col, whole);
+			tape = new Tape(row, col, whole);
 
 			in.close();
-		} catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
-
+		} catch (final Exception e) {
+			e.printStackTrace(System.err);
 		}
-		return tmp;
+		return tape;
 	}
 }

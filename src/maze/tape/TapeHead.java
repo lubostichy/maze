@@ -92,6 +92,22 @@ public class TapeHead {
 		}
 	}
 
+	public String showDir() {
+
+		switch (dir) {
+		case NORTH:
+			return "^";
+		case WEST:
+			return "<";
+		case SOUTH:
+			return "v";
+		case EAST:
+			return ">";
+		}
+		throw new RuntimeException("direction is unknown");
+
+	}
+
 	/**
 	 * Zistí, aké políčko je pred objektom.
 	 * 

@@ -22,10 +22,10 @@ public class TapeField {
 	private Tape tape;
     
     /** objekt */
-    private TapeObject object = null;
+	private TapeObject object;
     
     /** výskyt hlavy */
-    private boolean isHead = false;
+	private boolean isHead;
     
     /**
      * Položí objekt na políčko na základe predaného parametru.
@@ -37,21 +37,20 @@ public class TapeField {
     public TapeField(final Tape tape, final int x, final int y, final EObject type) {
         this.tape = tape;
         this.x = x;
-        this.y = y;
-        this.setObject(null);
-		this.setHead(false);
+		this.y = y;
+		this.isHead = false;
         switch (type) {
             case WALL:
-                this.setObject(new Wall());
+            	this.object = new Wall();
                 break;
             case GATE:
-                this.setObject(new Gate());
+            	this.object = new Gate();
                 break;
             case KEY:
-                this.setObject(new Key());
+            	this.object = new Key();
                 break;
             case FINISH:
-                this.setObject(new Finish());  
+            	this.object = new Finish();  
                 break;
 		default:
 			break;
@@ -63,8 +62,8 @@ public class TapeField {
      * @return ak je objekt brána vracia true alebo false, inak false
      */
     public boolean canBeOpen() {
-		if (getObject() != null) {
-			return getObject().canBeOpen();
+		if (object != null) {
+			return object.canBeOpen();
         }
         return false;
     }
@@ -74,8 +73,8 @@ public class TapeField {
      * @return true alebo false
      */
     public boolean canSeize() {
-		if (getObject() != null) {
-            return getObject().canSeize();
+		if (object != null) {
+			return object.canSeize();
         }
         return true;
     }
