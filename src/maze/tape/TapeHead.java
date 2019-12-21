@@ -12,16 +12,16 @@ import maze.objects.Key;
 public class TapeHead {
 
 	/** identifikátor hlavy */
-	private int ident = 0;
+	private final int ident;
 
 	/** políčko, na ktorej sa hlava nachádza */
-	private TapeField field = null;
+	private TapeField field;
 
 	/** počet kľúčov, ktoré vlastní */
-	private int keys = 0;
+	private int keys;
 
 	/** smer, ktorým sa pozerá */
-	private String dir = "north";
+	private EDirection dir;
 
 	/**
 	 * Inicializuje hráča.
@@ -29,9 +29,11 @@ public class TapeHead {
 	 * @param id identifikátor
 	 * @param f  políčko, na ktoré má byť hlava umiestnená
 	 */
-	public TapeHead(final int id, final TapeField f) {
-		ident = id;
-		field = f;
+	public TapeHead(final int ident, final TapeField field) {
+		this.ident = ident;
+		this.field = field;
+		this.keys = 0;
+		this.dir = EDirection.NORTH;
 	}
 
 	/**
@@ -55,17 +57,17 @@ public class TapeHead {
 	 */
 	public void left() {
 		switch (getDir()) {
-		case "north":
-			setDir("west");
+		case NORTH:
+			setDir(EDirection.WEST);
 			break;
-		case "west":
-			setDir("south");
+		case WEST:
+			setDir(EDirection.SOUTH);
 			break;
-		case "south":
-			setDir("east");
+		case SOUTH:
+			setDir(EDirection.EAST);
 			break;
-		case "east":
-			setDir("north");
+		case EAST:
+			setDir(EDirection.NORTH);
 			break;
 		}
 	}
@@ -75,17 +77,17 @@ public class TapeHead {
 	 */
 	public void right() {
 		switch (getDir()) {
-		case "north":
-			setDir("east");
+		case NORTH:
+			setDir(EDirection.EAST);
 			break;
-		case "east":
-			setDir("south");
+		case EAST:
+			setDir(EDirection.SOUTH);
 			break;
-		case "south":
-			setDir("west");
+		case SOUTH:
+			setDir(EDirection.WEST);
 			break;
-		case "west":
-			setDir("north");
+		case WEST:
+			setDir(EDirection.NORTH);
 			break;
 		}
 	}
@@ -107,7 +109,7 @@ public class TapeHead {
 		final int tmpY = field.getY();
 
 		switch (getDir()) {
-		case "north":
+		case NORTH:
 			if (field.getX() == 0) {
 				return null;
 			}
@@ -117,7 +119,7 @@ public class TapeHead {
 			tmp.setObject(field.getTape().getArrFieldByCoord(tmp.getX(), tmp.getY()).getObject());
 			tmp.setTape(field.getTape());
 			return tmp;
-		case "east":
+		case EAST:
 			if (this.field.getTape().getColumnCount() == (field.getY() + 1)) {
 				return null;
 			}
@@ -127,7 +129,7 @@ public class TapeHead {
 			tmp.setObject(field.getTape().getArrFieldByCoord(tmp.getX(), tmp.getY()).getObject());
 			tmp.setTape(field.getTape());
 			return tmp;
-		case "south":
+		case SOUTH:
 			if (this.field.getTape().getRowCount() == (field.getX() + 1)) {
 				return null;
 			}
@@ -137,7 +139,7 @@ public class TapeHead {
 			tmp.setObject(field.getTape().getArrFieldByCoord(tmp.getX(), tmp.getY()).getObject());
 			tmp.setTape(field.getTape());
 			return tmp;
-		case "west":
+		case WEST:
 			if (this.field.getY() == 0) {
 				return null;
 			}
@@ -203,11 +205,11 @@ public class TapeHead {
 		return false;
 	}
 
-	public String getDir() {
+	public EDirection getDir() {
 		return dir;
 	}
 
-	public void setDir(final String dir) {
+	public void setDir(final EDirection dir) {
 		this.dir = dir;
 	}
 }

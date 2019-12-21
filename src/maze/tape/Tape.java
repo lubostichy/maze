@@ -91,16 +91,16 @@ public class Tape {
 					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
 						switch (h.getDir()) {
-						case "north":
+						case NORTH:
 							System.out.print("^");
 							break;
-						case "west":
+						case WEST:
 							System.out.print("<");
 							break;
-						case "south":
+						case SOUTH:
 							System.out.print("v");
 							break;
-						case "east":
+						case EAST:
 							System.out.print(">");
 							break;
 						}
@@ -111,16 +111,16 @@ public class Tape {
 					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
 						switch (h.getDir()) {
-						case "north":
+						case NORTH:
 							System.out.print("^ ");
 							break;
-						case "west":
+						case WEST:
 							System.out.print("< ");
 							break;
-						case "south":
+						case SOUTH:
 							System.out.print("v ");
 							break;
-						case "east":
+						case EAST:
 							System.out.print("> ");
 							break;
 						}
