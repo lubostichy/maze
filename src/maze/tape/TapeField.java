@@ -1,6 +1,10 @@
 package maze.tape;
 
-import maze.objects.*;
+import maze.objects.Finish;
+import maze.objects.Gate;
+import maze.objects.Key;
+import maze.objects.TapeObject;
+import maze.objects.Wall;
 
 /**
  * Trieda vytvori objekty(stena,brana..)
@@ -9,19 +13,19 @@ import maze.objects.*;
 public class TapeField {
     
     /** riadok pásky */
-    protected int x;
+	private int x;
     
     /** stĺpec pásky */
-    protected int y;
+	private int y;
     
     /** páska */
-    protected Tape tape;
+	private Tape tape;
     
     /** objekt */
-    protected TapeObject object = null;
+    private TapeObject object = null;
     
     /** výskyt hlavy */
-    protected boolean isHead = false;
+    private boolean isHead = false;
     
     /**
      * Položí objekt na políčko na základe predaného parametru.
@@ -30,24 +34,24 @@ public class TapeField {
      * @param y stlpec
      * @param type typ objektu
      */
-    public TapeField(Tape tape, int x, int y, EObject type) {
+    public TapeField(final Tape tape, final int x, final int y, final EObject type) {
         this.tape = tape;
         this.x = x;
         this.y = y;
-        this.object = null;
-        this.isHead = false;
+        this.setObject(null);
+		this.setHead(false);
         switch (type) {
             case WALL:
-                this.object = new Wall();
+                this.setObject(new Wall());
                 break;
             case GATE:
-                this.object = new Gate();
+                this.setObject(new Gate());
                 break;
             case KEY:
-                this.object = new Key();
+                this.setObject(new Key());
                 break;
             case FINISH:
-                this.object = new Finish();  
+                this.setObject(new Finish());  
                 break;
 		default:
 			break;
@@ -59,8 +63,8 @@ public class TapeField {
      * @return ak je objekt brána vracia true alebo false, inak false
      */
     public boolean canBeOpen() {
-        if (this.object != null) {
-            return this.object.canBeOpen();
+		if (getObject() != null) {
+			return getObject().canBeOpen();
         }
         return false;
     }
@@ -70,10 +74,44 @@ public class TapeField {
      * @return true alebo false
      */
     public boolean canSeize() {
-        if (this.object != null) {
-            return object.canSeize();
+		if (getObject() != null) {
+            return getObject().canSeize();
         }
         return true;
     }
+
+	public boolean isHead() {
+		return isHead;
+	}
+
+	public void setHead(final boolean isHead) {
+		this.isHead = isHead;
+	}
+
+	public Tape getTape() {
+		return tape;
+	}
+
+	public void setTape(final Tape tape) {
+		this.tape = tape;
+	}
+	public TapeObject getObject() {
+		return object;
+	}
+	public void setObject(final TapeObject object) {
+		this.object = object;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(final int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(final int y) {
+		this.y = y;
+	}
     
 }

@@ -8,19 +8,19 @@ package maze.tape;
 public class Tape {
 
 	/** 2D páska pre objekty */
-	public TapeField[][] arrField;
+	private final TapeField[][] arrField;
 
 	/** riadok pásky */
-	protected int rowCount;
+	private final int rowCount;
 
 	/** stĺpec pásky */
-	protected int columnCount;
+	private final int columnCount;
 
 	/** počet hláv */
-	protected int headCount;
+	private final int headCount;
 
 	/** reťazec objektov */
-	protected String whole;
+	private String whole;
 
 	/**
 	 * Vytvorí 2D pole políčok.
@@ -30,7 +30,7 @@ public class Tape {
 	 * @param h      počet hráčov
 	 * @param format reťazec objektov, ktoré sa vytvoria
 	 */
-	public Tape(int rowCount, int columnCount, String format) {
+	public Tape(final int rowCount, final int columnCount, final String format) {
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
 		this.arrField = new TapeField[rowCount][columnCount];
@@ -49,9 +49,9 @@ public class Tape {
 			symbol = format.substring(k, k + 1);
 
 			try {
-				EObject objectType = EObject.valueOfSymbol(symbol);
+				final EObject objectType = EObject.valueOfSymbol(symbol);
 				this.arrField[i][j] = new TapeField(this, i, j, objectType);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				throw new RuntimeException("Wrong symbol in the maze");
 			}
 
@@ -64,14 +64,13 @@ public class Tape {
 	 * @param i ID hráča
 	 * @return novú hlavu alebo null
 	 */
-	public TapeHead createHead(int i) {
+	public TapeHead createHead(final int i) {
 		// int j=0;
-		for (int x = 0; x < this.columnCount; x++) {
-			for (int y = 0; y < this.rowCount; y++) {
+		for (int x = 0; x < this.getColumnCount(); x++) {
+			for (int y = 0; y < this.getRowCount(); y++) {
 				if (arrField[x][y].canSeize()) {
-					arrField[x][y].isHead = true;
-					TapeHead tmp = new TapeHead(i, arrField[x][y]);
-					return tmp;
+					arrField[x][y].setHead(true);
+					return new TapeHead(i, arrField[x][y]);
 				}
 
 			}
@@ -84,14 +83,14 @@ public class Tape {
 	 * 
 	 * @param h hlava
 	 */
-	public void show(TapeHead h) {
-		for (int i = 0; i < columnCount; i++) {
-			for (int j = 0; j < rowCount; j++) {
-				if (arrField[i][j].object != null) // ak je voľné políčko
+	public void show(final TapeHead h) {
+		for (int i = 0; i < getColumnCount(); i++) {
+			for (int j = 0; j < getRowCount(); j++) {
+				if (arrField[i][j].getObject() != null) // ak je voľné políčko
 				{
-					if (arrField[i][j].isHead) // je na ňom hráč
+					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
-						switch (h.dir) {
+						switch (h.getDir()) {
 						case "north":
 							System.out.print("^");
 							break;
@@ -106,12 +105,12 @@ public class Tape {
 							break;
 						}
 					} else {
-						System.out.print(arrField[i][j].object.show() + " "); // voľné políčko
+						System.out.print(arrField[i][j].getObject().show() + " "); // voľné políčko
 					}
 				} else { // ak je políčko s objektom
-					if (arrField[i][j].isHead) // je na ňom hráč
+					if (arrField[i][j].isHead()) // je na ňom hráč
 					{
-						switch (h.dir) {
+						switch (h.getDir()) {
 						case "north":
 							System.out.print("^ ");
 							break;
@@ -132,6 +131,19 @@ public class Tape {
 			}
 			System.out.println();
 		}
+	}
+
+	public TapeField getArrFieldByCoord(final int x, final int y) {
+		return arrField[x][y];
+	}
+
+
+	public int getColumnCount() {
+		return columnCount;
+	}
+
+	public int getRowCount() {
+		return rowCount;
 	}
 
 }
