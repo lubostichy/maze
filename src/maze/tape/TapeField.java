@@ -21,7 +21,7 @@ public class TapeField {
     protected TapeObject object = null;
     
     /** výskyt hlavy */
-    protected int isHead = 0;
+    protected boolean isHead = false;
     
     /**
      * Položí objekt na políčko na základe predaného parametru.
@@ -30,25 +30,27 @@ public class TapeField {
      * @param y stlpec
      * @param type typ objektu
      */
-    public TapeField(Tape tape, int x, int y, String type) {
+    public TapeField(Tape tape, int x, int y, EObject type) {
         this.tape = tape;
         this.x = x;
         this.y = y;
         this.object = null;
-        this.isHead = 0;
+        this.isHead = false;
         switch (type) {
-            case "w":
+            case WALL:
                 this.object = new Wall();
                 break;
-            case "g":
+            case GATE:
                 this.object = new Gate();
                 break;
-            case "k":
+            case KEY:
                 this.object = new Key();
                 break;
-            case "f":
+            case FINISH:
                 this.object = new Finish();  
                 break;
+		default:
+			break;
         }
         
     }

@@ -139,7 +139,7 @@ public class Service {
 				whole = whole.replaceAll("\\s+", "");
 			}
 
-			tmp = new Tape(row, col, 0, whole);
+			tmp = new Tape(row, col, whole);
 
 			in.close();
 		} catch (Exception e) {

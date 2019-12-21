@@ -121,7 +121,7 @@ public class TapeHead
                 tmp.tape = field.tape;
                 return tmp;
             case "east":
-                if (this.field.tape.col == (field.y + 1))
+                if (this.field.tape.columnCount == (field.y + 1))
                 {
                     return null;
                 }
@@ -132,7 +132,7 @@ public class TapeHead
                 tmp.tape = field.tape;            
                 return tmp;
             case "south":
-                if (this.field.tape.row == (field.x + 1))
+                if (this.field.tape.rowCount == (field.x + 1))
                 {
                     return null;
                 }
@@ -206,8 +206,8 @@ public class TapeHead
         {
             if (tmp.canSeize()) 
             {
-                this.field.tape.arrField[field.x][field.y].isHead = 0;
-                this.field.tape.arrField[tmp.x][tmp.y].isHead = 1;
+                this.field.tape.arrField[field.x][field.y].isHead = false;
+                this.field.tape.arrField[tmp.x][tmp.y].isHead = true;
                 this.field = tmp;
                 return true;
             }
