@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Scanner;
 
 import maze.tape.Tape;
@@ -26,8 +27,6 @@ public class Service {
 			while (true) {
 				System.out.println("Set a game:");
 				input = sc.nextLine();
-				System.out.println(ECommand.GAME.toString());
-				System.out.println(input.toUpperCase().equals(ECommand.GAME.toString()));
 				if (input.toUpperCase().startsWith(ECommand.GAME.toString()) && input.length() >= 5) {
 
 					t1 = file(input.substring(5));
@@ -36,12 +35,13 @@ public class Service {
 						h1 = t1.createHead(0);
 						break;
 					}
+					break;
 				}
 				System.out.println(BAD_EXPRESSION_TEXT);
 			}
 			
-//			Objects.requireNonNull(t1);
-//			Objects.requireNonNull(h1);
+			Objects.requireNonNull(t1);
+			Objects.requireNonNull(h1);
 
 			System.out.println("The game begins...");
 

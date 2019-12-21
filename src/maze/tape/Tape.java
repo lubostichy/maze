@@ -1,5 +1,7 @@
 package maze.tape;
 
+import java.util.ArrayList;
+
 import maze.objects.EObject;
 
 /**
@@ -10,7 +12,8 @@ import maze.objects.EObject;
 public class Tape {
 
 	/** 2D páska pre objekty */
-	private final TapeField[][] arrField;
+//	private final TapeField[][] arrField;
+	private final ArrayList<ArrayList<TapeField>> arrField;
 
 	/** riadok pásky */
 	private final int rowCount;
@@ -35,29 +38,37 @@ public class Tape {
 	public Tape(final int rowCount, final int columnCount, final String format) {
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
-		this.arrField = new TapeField[rowCount][columnCount];
+		this.arrField = new ArrayList<ArrayList<TapeField>>();// new TapeField[rowCount][columnCount];
 		this.headCount = 0;
 
-		int j = 0;
-		int i = 0;
+		int x = 0;
+		int y = 0;
 		String symbol;
+		// final ArrayList<ArrayList<TapeField>> cols = new ArrayList<>();
+		ArrayList<TapeField> rows = new ArrayList<TapeField>();
 		for (int k = 0; format.length() > k; k++) {
 
-			if (j == columnCount) {
-				j = 0;
-				i++;
+			if (x == columnCount) {
+				y++;
+				this.arrField.add(rows);
+				x = 0;
+				rows = new ArrayList<TapeField>();
 			}
 
 			symbol = format.substring(k, k + 1);
 
 			try {
 				final EObject objectType = EObject.valueOfSymbol(symbol);
-				this.arrField[i][j] = new TapeField(this, i, j, objectType);
+				x++;
+				rows.add(new TapeField(this, x, y, objectType));
 			} catch (final IllegalArgumentException e) {
 				throw new RuntimeException("Wrong symbol in the maze");
 			}
 
 		}
+
+		this.arrField.add(rows);
+
 	}
 
 	/**
@@ -67,12 +78,11 @@ public class Tape {
 	 * @return novú hlavu alebo null
 	 */
 	public TapeHead createHead(final int i) {
-		// int j=0;
-		for (int x = 0; x < this.getColumnCount(); x++) {
-			for (int y = 0; y < this.getRowCount(); y++) {
-				if (arrField[x][y].canSeize()) {
-					arrField[x][y].setHead(true);
-					return new TapeHead(i, arrField[x][y]);
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				if (arrField.get(x).get(y).canSeize()) {
+					arrField.get(x).get(y).setHead(true);
+					return new TapeHead(i, arrField.get(x).get(y));
 				}
 
 			}
@@ -86,33 +96,30 @@ public class Tape {
 	 * @param h hlava
 	 */
 	public void show(final TapeHead h) {
-		for (int i = 0; i < getColumnCount(); i++) {
-			for (int j = 0; j < getRowCount(); j++) {
-				if (arrField[i][j].getObject() != null) // ak je voľné políčko
-				{
-					if (arrField[i][j].isHead()) // je na ňom hráč
-					{
-						System.out.println(h.showDir() + " ");
-					} else {
-						System.out.print(arrField[i][j].getObject().show() + " "); // voľné políčko
-					}
-				} else { // ak je políčko s objektom
-					if (arrField[i][j].isHead()) // je na ňom hráč
-					{
-						System.out.println(h.showDir() + " ");
-					} else {
-						System.out.print("P ");
-					}
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				if (arrField.get(x).get(y).isHead()) { // je na ňom hráč
+					System.out.print(h.showDir() + " ");
+				} else {
+					System.out.print(arrField.get(x).get(y).getObject().show() + " "); // voľné políčko
 				}
 			}
 			System.out.println();
 		}
 	}
 
-	public TapeField getArrFieldByCoord(final int x, final int y) {
-		return arrField[x][y];
+	public void show() {
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				System.out.print(arrField.get(x).get(y).getObject().show() + " "); // voľné políčko
+			}
+			System.out.println();
+		}
 	}
 
+	public TapeField getArrFieldByCoord(final int x, final int y) {
+		return arrField.get(x).get(y);
+	}
 
 	public int getColumnCount() {
 		return columnCount;
