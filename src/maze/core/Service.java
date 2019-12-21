@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.Scanner;
 
 import maze.tape.Tape;
@@ -41,8 +40,8 @@ public class Service {
 				System.out.println(BAD_EXPRESSION_TEXT);
 			}
 			
-			Objects.requireNonNull(t1);
-			Objects.requireNonNull(h1);
+//			Objects.requireNonNull(t1);
+//			Objects.requireNonNull(h1);
 
 			System.out.println("The game begins...");
 

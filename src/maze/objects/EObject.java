@@ -1,16 +1,17 @@
-package maze.tape;
+package maze.objects;
 
 public enum EObject {
 	
 	WALL("w"), 
 	GATE("g"), 
-	PLAYER("p"),
+	OPENED_GATE("o"),
+	PLACE("p"),
 	KEY("k"), 
 	FINISH("f");
 	
 	String symbol;
 	
-	EObject(String symbol) {
+	EObject(final String symbol) {
 		this.symbol = symbol;
 	}
 	
@@ -18,7 +19,7 @@ public enum EObject {
 		return symbol;
 	}
 	
-	public static EObject valueOfSymbol(String symbol) {
+	public static EObject valueOfSymbol(final String symbol) {
 		
 		switch (symbol.toLowerCase()) {
 		case "w":
@@ -26,7 +27,7 @@ public enum EObject {
 		case "g":
 			return GATE;
 		case "p":
-			return PLAYER;
+			return PLACE;
 		case "k":
 			return KEY;
 		case "f":

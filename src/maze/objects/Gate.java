@@ -2,61 +2,59 @@ package maze.objects;
 
 /**
  * Predstavuje bránu.
+ * 
  * @author Ľuboš Tichý
  */
-public class Gate extends maze.objects.TapeObject
-{
+public class Gate extends TapeObject {
 
-    /** Informácia o otvorenej bráne. Na začiatku je zatvorená. */
-    protected boolean OpenDoor = false;
+	/** Informácia o otvorenej bráne. Na začiatku je zatvorená. */
+	protected boolean OpenDoor = false;
 
-    /**
-     * Testuje, či je možné bránu otvoriť.
-     * @return Ak je zavretá tak true, inak false.
-     */
-    @Override
-    public boolean canBeOpen() 
-    {
-        return !this.OpenDoor;
-    }
-    
-    /**
-     * Testuje, či je možné bránu obsadiť.
-     * @return Ak je otvorená true inak false.
-     */
-    @Override
-    public boolean canSeize() 
-    {
-        return (OpenDoor == true);
-    }
-    
-    /**
-     * Otvorí bránu.
-     * @return Ak je už otvorená false, inak true.
-     */
-    @Override
-    public boolean open() 
-    {
-        if (this.OpenDoor) 
-        {
-            return false;
-        }     
+	/**
+	 * Testuje, či je možné bránu otvoriť.
+	 * 
+	 * @return Ak je zavretá tak true, inak false.
+	 */
+	@Override
+	public boolean canBeOpen() {
+		return !this.OpenDoor;
+	}
 
-        this.OpenDoor = true;
-        return true;
-    }    
-    
-    /**
-     * Vypíše na obrazovku.
-     * @return Ak je otvorená tak "O" inak "G".
-     */
-    @Override
-    public String show()
-    {
-        if (OpenDoor) 
-        {
-            return "O";
-        }
-        return "G";
-    }
+	/**
+	 * Testuje, či je možné bránu obsadiť.
+	 * 
+	 * @return Ak je otvorená true inak false.
+	 */
+	@Override
+	public boolean canSeize() {
+		return (OpenDoor == true);
+	}
+
+	/**
+	 * Otvorí bránu.
+	 * 
+	 * @return Ak je už otvorená false, inak true.
+	 */
+	@Override
+	public boolean open() {
+		if (this.OpenDoor) {
+			return false;
+		}
+
+		this.OpenDoor = true;
+		return true;
+	}
+
+	/**
+	 * Vypíše na obrazovku.
+	 * 
+	 * @return Ak je otvorená tak "O" inak "G".
+	 */
+	@Override
+	public String show() {
+		if (OpenDoor) {
+			return EObject.OPENED_GATE.getSymbol().toUpperCase();
+		}
+		return EObject.GATE.getSymbol().toUpperCase();
+	}
 }

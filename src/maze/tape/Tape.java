@@ -1,5 +1,7 @@
 package maze.tape;
 
+import maze.objects.EObject;
+
 /**
  * Trieda vytvorí pásku s objektami, hlavy a vypíše na výstup podobu bludiska.
  * 

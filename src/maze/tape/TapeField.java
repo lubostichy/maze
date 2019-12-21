@@ -1,5 +1,6 @@
 package maze.tape;
 
+import maze.objects.EObject;
 import maze.objects.Finish;
 import maze.objects.Gate;
 import maze.objects.Key;
