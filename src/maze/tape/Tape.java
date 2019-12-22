@@ -1,166 +1,130 @@
 package maze.tape;
 
+import java.util.ArrayList;
+
+import maze.objects.EObject;
+
 /**
  * Trieda vytvorí pásku s objektami, hlavy a vypíše na výstup podobu bludiska.
+ * 
  * @author Ľuboš Tichý
  */
-public class Tape 
-{
+public class Tape {
 
-    /** 2D páska pre objekty */
-    public TapeField[][] arrField;
-    
-    /** riadok pásky */
-    protected int row;
-    
-    /** stĺpec pásky */
-    protected int col;
+	/** 2D páska pre objekty */
+	private final ArrayList<ArrayList<TapeField>> arrField;
 
-    /** počet hláv */
-    protected int h;
-    
-    /** reťazec objektov */
-    protected String whole;
-    
-    /**
-     * Vytvorí 2D pole políčok.
-     * @param r riadky
-     * @param c stĺpce
-     * @param h počet hráčov
-     * @param format reťazec objektov, ktoré sa vytvoria
-     */
-    public Tape(int r,int c, int h, String format)
-    {
-        this.row = r;
-        this.col = c;
-        this.arrField = new TapeField[r][c];        
-        this.h = h ;
-              
-        int j = 0;
-        int i = 0;
-        String ch;          
-        for(int k = 0; format.length() > k; k++)  
-        { 
-            if (j == c)
-            {
-                j=0;
-                i++;
-            }
-            
-            ch = format.substring(k, k + 1);
-            
-            if(null != ch)
-            switch (ch) 
-            {
-                case "w":
-                    this.arrField[i][j] = new TapeField(this, i, j, "w");
-                    j++;
-                    break;
-                case "g":
-                    this.arrField[i][j] = new TapeField(this, i, j, "g");
-                    j++;
-                    break;
-                case "p":
-                    this.arrField[i][j] = new TapeField(this, i, j, "p");
-                    j++;
-                    break;
-                case "k":
-                    this.arrField[i][j] = new TapeField(this, i, j, "k");
-                    j++;
-                    break;
-                case "F":
-                    this.arrField[i][j] = new TapeField(this, i, j, "f");
-                    j++;
-                    break;
-            }
-        }
-    }
-    
-    /**
-     * Vytvorí hráča(hlavu).
-     * @param i ID hráča
-     * @return novú hlavu alebo null
-     */
-    public TapeHead createHead(int i)
-    {
-        //int j=0;
-        for(int x = 0; x < this.col; x++) 
-        {
-            for(int y=0; y<this.row; y++) 
-            {
-                if(arrField[x][y].canSeize()) 
-                {
-                    arrField[x][y].isHead = 1;
-                    TapeHead tmp = new TapeHead(i, arrField[x][y]);
-                    return tmp;
-                }
-            
-            }
-        }
-        return null;    
-    }
-    /**
-     * Vypíše na výstup bludisko aj s hráčmi.
-     * @param h hlava
-     */
-    public void show(TapeHead h) 
-    {        
-        for (int i = 0; i < col; i++) 
-        {
-            for (int j = 0; j < row; j++) 
-            {
-                if (arrField[i][j].object != null) // ak je voľné políčko
-                { 
-                    if (arrField[i][j].isHead == 1)  // je na ňom hráč
-                    {
-                        switch (h.dir) 
-                        {
-                            case "north":
-                                System.out.print("^");
-                                break;
-                            case "west":
-                                System.out.print("<");
-                                break;
-                            case "south":
-                                System.out.print("v");
-                                break;
-                            case "east":
-                                System.out.print(">");
-                                break;
-                        }
-                    }
-                    else 
-                    {
-                        System.out.print(arrField[i][j].object.show()+" "); // voľné políčko
-                    }
-                } 
-                else { // ak je políčko s objektom
-                    if (arrField[i][j].isHead == 1)  // je na ňom hráč
-                    {
-                        switch (h.dir) 
-                        {
-                            case "north":
-                                System.out.print("^ ");
-                                break;
-                            case "west":
-                                System.out.print("< ");
-                                break;
-                            case "south":
-                                System.out.print("v ");
-                                break;
-                            case "east":
-                                System.out.print("> ");
-                                break;
-                        }
-                    }
-                    else 
-                    {
-                        System.out.print("P ");
-                    }
-                }
-            }
-            System.out.println();
-        }
-    }
-    
+	/** riadok pásky */
+	private final int rowCount;
+
+	/** stĺpec pásky */
+	private final int columnCount;
+
+	/** počet hláv */
+	private final int headCount;
+
+	/** reťazec objektov */
+	private String whole;
+
+	/**
+	 * Vytvorí 2D pole políčok.
+	 * 
+	 * @param r      riadky
+	 * @param c      stĺpce
+	 * @param h      počet hráčov
+	 * @param format reťazec objektov, ktoré sa vytvoria
+	 */
+	public Tape(final int rowCount, final int columnCount, final String format) {
+		this.rowCount = rowCount;
+		this.columnCount = columnCount;
+		this.arrField = new ArrayList<ArrayList<TapeField>>();
+		this.headCount = 0;
+
+		int x = 0;
+		int y = 0;
+		String symbol;
+		ArrayList<TapeField> rows = new ArrayList<TapeField>();
+		for (int k = 0; format.length() > k; k++) {
+
+			if (x == columnCount) {
+				y++;
+				this.arrField.add(rows);
+				x = 0;
+				rows = new ArrayList<TapeField>();
+			}
+
+			symbol = format.substring(k, k + 1);
+
+			try {
+				final EObject objectType = EObject.valueOfSymbol(symbol);
+				x++;
+				rows.add(new TapeField(this, x, y, objectType));
+			} catch (final IllegalArgumentException e) {
+				throw new RuntimeException("Wrong symbol in the maze");
+			}
+
+		}
+
+		this.arrField.add(rows);
+
+	}
+
+	/**
+	 * Vytvorí hráča(hlavu).
+	 * 
+	 * @param i ID hráča
+	 * @return novú hlavu alebo null
+	 */
+	public TapeHead createHead(final int i) {
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				if (arrField.get(x).get(y).canSeize()) {
+					arrField.get(x).get(y).setHead(true);
+					return new TapeHead(i, arrField.get(x).get(y));
+				}
+
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Vypíše na výstup bludisko aj s hráčmi.
+	 * 
+	 * @param h hlava
+	 */
+	public void show(final TapeHead h) {
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				if (arrField.get(x).get(y).isHead()) { // je na ňom hráč
+					System.out.print(h.showDir() + " ");
+				} else {
+					System.out.print(arrField.get(x).get(y).getObject().show() + " "); // voľné políčko
+				}
+			}
+			System.out.println();
+		}
+	}
+
+	public void show() {
+		for (int y = 0; y < getRowCount(); y++) {
+			for (int x = 0; x < getColumnCount(); x++) {
+				System.out.print(arrField.get(x).get(y).getObject().show() + " "); // voľné políčko
+			}
+			System.out.println();
+		}
+	}
+
+	public TapeField getArrFieldByCoord(final int x, final int y) {
+		return arrField.get(x).get(y);
+	}
+
+	public int getColumnCount() {
+		return columnCount;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
 }
