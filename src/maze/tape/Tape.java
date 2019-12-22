@@ -12,7 +12,6 @@ import maze.objects.EObject;
 public class Tape {
 
 	/** 2D páska pre objekty */
-//	private final TapeField[][] arrField;
 	private final ArrayList<ArrayList<TapeField>> arrField;
 
 	/** riadok pásky */
@@ -38,13 +37,12 @@ public class Tape {
 	public Tape(final int rowCount, final int columnCount, final String format) {
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
-		this.arrField = new ArrayList<ArrayList<TapeField>>();// new TapeField[rowCount][columnCount];
+		this.arrField = new ArrayList<ArrayList<TapeField>>();
 		this.headCount = 0;
 
 		int x = 0;
 		int y = 0;
 		String symbol;
-		// final ArrayList<ArrayList<TapeField>> cols = new ArrayList<>();
 		ArrayList<TapeField> rows = new ArrayList<TapeField>();
 		for (int k = 0; format.length() > k; k++) {
 
