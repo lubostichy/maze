@@ -1,11 +1,10 @@
 package maze.core;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -39,7 +38,7 @@ public class Service {
 				}
 				System.out.println(BAD_EXPRESSION_TEXT);
 			}
-			
+
 			Objects.requireNonNull(t1);
 			Objects.requireNonNull(h1);
 
@@ -60,9 +59,6 @@ public class Service {
 				switch (command) {
 				case SHOW:
 					t1.show(h1);
-					break;
-				case CLOSE:
-					sc.close();
 					break;
 				case STEP:
 					if (h1.step()) {
@@ -96,12 +92,15 @@ public class Service {
 				case KEYS:
 					System.out.println("Keys: " + h1.keys());
 					break;
+				case CLOSE:
+					System.out.println("The game has been closed");
+					return;
 				default:
-					break;				
+					break;
 				}
 			}
 
-		} 
+		}
 
 	}
 
@@ -116,35 +115,33 @@ public class Service {
 		int row = 0;
 		int col = 0;
 
-		final Path currentRelativePath = Paths.get("");
-		final String s = currentRelativePath.toAbsolutePath().toString();
-
+		final File file = new File("./examples/", name);
 		try {
-			final FileInputStream fstream = new FileInputStream(s + "/examples/" + name);
-			final DataInputStream in = new DataInputStream(fstream);
-			final BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String strLine;
-			String whole = "";
+			try (final FileInputStream in = new FileInputStream(file);
+					final BufferedReader br = new BufferedReader(new InputStreamReader(in));) {
+				String strLine;
+				String whole = "";
 
-			while ((strLine = br.readLine()) != null) {
-				if (strLine.matches(".*\\d.*")) {
-					final String[] parts = strLine.split(" ");
+				while ((strLine = br.readLine()) != null) {
+					if (strLine.matches(".*\\d.*")) {
+						final String[] parts = strLine.split(" ");
 
-					row = Integer.parseInt(parts[0]);
-					col = Integer.parseInt(parts[1]);
+						row = Integer.parseInt(parts[0]);
+						col = Integer.parseInt(parts[1]);
 
-					continue;
+						continue;
+					}
+
+					whole = whole.concat(strLine);
+					whole = whole.replaceAll("\\s+", "");
 				}
 
-				whole = whole.concat(strLine);
-				whole = whole.replaceAll("\\s+", "");
+				tape = new Tape(row, col, whole);
+
+				in.close();
 			}
-
-			tape = new Tape(row, col, whole);
-
-			in.close();
-		} catch (final Exception e) {
-			e.printStackTrace(System.err);
+		} catch (IOException | NumberFormatException e) {
+			throw new RuntimeException("Error in the game textfile", e);
 		}
 		return tape;
 	}
